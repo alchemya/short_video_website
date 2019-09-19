@@ -1,0 +1,82 @@
+{% extends 'admin/admin.html' %}
+{% from 'ui/pagination.html' import page %}
+{% block content %}
+    <section class="content-header">
+            <h1>短视频管理系统</h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> 预告管理</a></li>
+                <li class="active">轮播图列表</li>
+            </ol>
+        </section>
+    <section class="content" id="showcontent">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-primary">
+                        <div class="box-header">
+                            <h3 class="box-title">轮播图列表(请至少保证有五张图片)</h3>
+                            <div class="box-tools">
+                                <div class="input-group input-group-sm" style="width: 150px;">
+                                    <input type="text" name="table_search" class="form-control pull-right"
+                                           placeholder="请输入关键字...">
+
+                                    <div class="input-group-btn">
+                                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-body table-responsive no-padding">
+                        {% for msg in get_flashed_messages(category_filter=["ok"]) %}
+                            <div class="alert alert-success alert-dismissible">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×
+                                </button>
+                                <h4><i class="icon fa fa-check"></i> 操作成功 </h4>
+                                {{ msg }}
+                            </div>
+                        {% endfor %}
+                            <table class="table table-hover">
+                                <tbody>
+                                <tr>
+                                    <th>编号</th>
+                                    <th>预告标题</th>
+                                    <th>预告封面</th>
+                                    <th>添加时间</th>
+                                    <th>操作事项</th>
+                                </tr>
+                                {% for item in page_data.items %}
+                                <tr>
+                                    <td>{{ item.id }}</td>
+                                    <td>{{ item.title }}</td>
+                                    <td>
+                                        <img src="{{ url_for('static',filename='movie_files/'+item.logo)  }}" style="width: 100px" class="img-responsive center-block" alt="">
+
+                                    </td>
+                                    <td>{{ item.addtime }}</td>
+                                    <td>
+                                        <a class="label label-success" href="{{ url_for('admin.preview_edit',id=item.id) }}">编辑</a>
+                                        &nbsp;
+                                        <a class="label label-danger" href="{{ url_for('admin.preview_del',id=item.id) }}">删除</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="box-footer clearfix">
+                            {{ page(page_data,'admin.preview_list') }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+{% endblock %}
+{% block js %}
+
+    <script>
+        $(function () {
+            $('#g-4').addClass('active');
+            $('#g-4-2').addClass('active');
+        });
+    </script>
+{% endblock %}

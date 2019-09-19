@@ -1,0 +1,84 @@
+{% extends 'home/home.html' %}
+
+{% block content %}
+    <div class="container" style="margin-top:80px">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><span class="glyphicon glyphicon-plus"></span>&nbsp;会员注册</h3>
+                </div>
+                <div class="panel-body">
+                    {% for msg in get_flashed_messages(category_filter=["ok"]) %}
+                        <div class="alert alert-success alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×
+                            </button>
+                            <h4><i class="icon fa fa-check"></i> 注册成功 </h4>
+                            {{ msg }}
+                        </div>
+                    {% endfor %}
+                     {% for msg in get_flashed_messages(category_filter=["err"]) %}
+                        <div class="alert alert-danger alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×
+                            </button>
+                            <h4><i class="icon fa fa-ban"></i> 注册失败 </h4>
+                            {{ msg }}
+                        </div>
+                    {% endfor %}
+                    <form role="form" method="post">
+                        <fieldset>
+                            <div class="form-group">
+                                <label for="input_name"><span class="glyphicon glyphicon-user"></span>&nbsp;昵称</label>
+                                {{ form.name(required=False) }}
+                            </div>
+                            {% for err in form.name.errors %}
+                                <div class="col-md-12" >
+                                    <span style="color: red;">{{ err }}</span>
+                                </div>
+                            {% endfor %}
+                            <div class="form-group">
+                                <label for="input_email"><span class="glyphicon glyphicon-envelope"></span>&nbsp;邮箱</label>
+                                {{ form.email(required=False) }}
+                            </div>
+                            {% for err in form.email.errors %}
+                                <div class="col-md-12" >
+                                    <span style="color: red;">{{ err }}</span>
+                                </div>
+                            {% endfor %}
+                            <div class="form-group">
+                                <label for="input_phone"><span class="glyphicon glyphicon-phone"></span>&nbsp;手机</label>
+                                {{ form.phone(required=False) }}
+                            </div>
+                            {% for err in form.phone.errors %}
+                                <div class="col-md-12" >
+                                    <span style="color: red;">{{ err }}</span>
+                                </div>
+                            {% endfor %}
+                            <div class="form-group">
+                                <label for="input_password"><span class="glyphicon glyphicon-lock"></span>&nbsp;密码</label>
+                                {{ form.pwd(required=False) }}
+                            </div>
+                            {% for err in form.pwd.errors %}
+                                <div class="col-md-12" >
+                                    <span style="color: red;">{{ err }}</span>
+                                </div>
+                            {% endfor %}
+                            <div class="form-group">
+                                <label for="input_repassword"><span class="glyphicon glyphicon-lock"></span>&nbsp;确认密码</label>
+                                {{ form.re_pwd(required=False) }}
+                            </div>
+                            {% for err in form.re_pwd.errors %}
+                                <div class="col-md-12" >
+                                    <span style="color: red;">{{ err }}</span>
+                                </div>
+                            {% endfor %}
+                            {{ form.submit }}
+                            {{ form.csrf_token }}
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
